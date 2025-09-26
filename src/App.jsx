@@ -1,10 +1,7 @@
-function App() {
-  const [count, setCount] = useState(0)
+import "./App.css";
 
-  return (
-    <>     
-    </>
-  )
+function App() {
+  return <></>;
 }
 
-export default App
+export default App;
