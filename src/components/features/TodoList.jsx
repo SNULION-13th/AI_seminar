@@ -5,11 +5,13 @@ import CheckmarkIcon from '../../assets/images/checkmark-icon.svg';
 import PlusIcon from '../../assets/images/plus-icon.svg';
 import InfoIcon from '../../assets/images/info-icon.svg';
 
-const TodoList = () => {
+const TodoList = ({ onNavigate }) => {
   const [todos, setTodos] = useState([
     { id: 1, text: '오늘의 할 일을 추가해보세요', completed: false },
     { id: 2, text: '완료된 일은 체크하세요', completed: true },
   ]);
+  const [editingId, setEditingId] = useState(null);
+  const [editText, setEditText] = useState('');
 
   const handleToggleComplete = (id) => {
     setTodos(
@@ -20,12 +22,45 @@ const TodoList = () => {
   };
 
   const handleAddTask = () => {
-    const text = prompt('새로운 할 일을 입력하세요:');
-    if (text) {
-      setTodos([
-        ...todos,
-        { id: Date.now(), text, completed: false },
-      ]);
+    const newId = Date.now();
+    const newTodos = [...todos, { id: newId, text: '', completed: false }];
+    setTodos(newTodos);
+    setEditingId(newId);
+    setEditText('');
+  };
+
+  const handleDeleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const handleStartEditing = (todo) => {
+    setEditingId(todo.id);
+    setEditText(todo.text);
+  };
+
+  const handleUpdateTodo = () => {
+    if (editText.trim() === '' && todos.find(t => t.id === editingId)) {
+      handleDeleteTodo(editingId);
+    } else {
+      setTodos(
+        todos.map((todo) =>
+          todo.id === editingId ? { ...todo, text: editText } : todo
+        )
+      );
+    }
+    setEditingId(null);
+    setEditText('');
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleUpdateTodo();
+    } else if (e.key === 'Escape') {
+      setEditingId(null);
+      setEditText('');
+      if (todos.find(t => t.id === editingId)?.text === '') {
+        handleDeleteTodo(editingId);
+      }
     }
   };
 
@@ -40,9 +75,14 @@ const TodoList = () => {
         <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Flow
         </h1>
-        <button>
-          <img src={MenuIcon} alt="Menu" className="w-6 h-6" />
-        </button>
+        <div>
+          <button onClick={() => onNavigate('focus')} className="text-sm font-semibold text-blue-600 mr-4">
+            집중 모드
+          </button>
+          <button>
+            <img src={MenuIcon} alt="Menu" className="w-6 h-6 inline-block align-middle" />
+          </button>
+        </div>
       </div>
 
       {/* Progress */}
@@ -53,7 +93,7 @@ const TodoList = () => {
         </div>
         <div className="mt-2 bg-gray-200 rounded-full h-2">
           <div
-            className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+            className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
             style={{ width: `${progressPercentage}%` }}
           ></div>
         </div>
@@ -70,7 +110,7 @@ const TodoList = () => {
           >
             <button
               onClick={() => handleToggleComplete(todo.id)}
-              className={`w-5 h-5 border-2 rounded-full flex-shrink-0 flex items-center justify-center ${
+              className={`w-5 h-5 border-2 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-200 ${
                 todo.completed
                   ? 'border-transparent bg-gradient-to-br from-blue-500 to-purple-500'
                   : 'border-gray-300'
@@ -78,10 +118,29 @@ const TodoList = () => {
             >
               {todo.completed && <img src={CheckmarkIcon} alt="Checked" className="w-3 h-3" />}
             </button>
-            <span className={`flex-grow ${todo.completed ? 'text-gray-400 line-through' : 'text-gray-800'}`}>
-              {todo.text}
-            </span>
-            <button>
+            
+            {editingId === todo.id ? (
+              <input
+                type="text"
+                value={editText}
+                onChange={(e) => setEditText(e.target.value)}
+                onBlur={handleUpdateTodo}
+                onKeyDown={handleKeyDown}
+                autoFocus
+                className="flex-grow bg-gray-100 px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            ) : (
+              <span
+                onClick={() => handleStartEditing(todo)}
+                className={`flex-grow cursor-pointer ${todo.completed ? 'text-gray-400 line-through' : 'text-gray-800'}`}>
+                {todo.text}
+              </span>
+            )}
+
+            <button onClick={() => handleDeleteTodo(todo.id)} className="text-gray-400 hover:text-red-500 font-bold px-2">
+                X
+            </button>
+            <button className="cursor-move">
               <img src={DragIcon} alt="Drag handle" className="w-4 h-4" />
             </button>
           </div>

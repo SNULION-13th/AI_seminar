@@ -1,7 +1,7 @@
 import SettingsIcon from '../../assets/images/settings-icon.svg';
 import FocusIcon from '../../assets/images/focus-icon.svg';
 
-const FocusMode = () => {
+const FocusMode = ({ onNavigate }) => {
   return (
     <div className="w-[512px] bg-white rounded-2xl shadow-lg overflow-hidden">
       <div className="flex justify-between items-center p-6 border-b border-gray-100">
@@ -21,9 +21,9 @@ const FocusMode = () => {
           지금은 집중 모드 시간입니다. 모든 할 일을 <br />
           숨기고 현재에 집중하세요.
         </p>
-        <a href="#" className="mt-12 text-sm font-semibold text-blue-600">
+        <button onClick={() => onNavigate('list')} className="mt-12 text-sm font-semibold text-blue-600">
           지금 이 순간에 집중하세요
-        </a>
+        </button>
       </div>
     </div>
   );
