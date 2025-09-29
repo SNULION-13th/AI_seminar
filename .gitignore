@@ -23,5 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
-GEMINI.md
-.gemini
+.gemini/*
+
+.gauth.json
+.accounts.json
+.credentials/
+.oauth.*.json
+
+backend/.env
