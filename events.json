@@ -1,0 +1,109 @@
+{
+  "events": [
+    {
+      "summary": "2장프 회의 코딩데이시간에 ⏰",
+      "id": "6op34dj560s3gbb1c8q34b9kc4o6abb2cgp38b9m68q38e3265j66e9m6g",
+      "start": { "dateTime": "2025-09-22T11:00:00Z" }
+    },
+    {
+      "summary": "오후 7시 ⏰",
+      "id": "c4pj4cr671gj2b9pcorm6b9k6dj3ebb269hj8bb1c4p66cb5ccr30c1j6c",
+      "start": { "dateTime": "2025-09-23T10:00:00Z" }
+    },
+    {
+      "summary": "테스트용 일정1 ⏰",
+      "id": "3k5j3jqjagnaob6ivlcm7d42ll",
+      "start": { "dateTime": "2025-09-28T17:00:00Z" }
+    },
+    {
+      "summary": "테스트용 일정 2 ⏰",
+      "id": "0lph59ppf7obmga34i85tjt1qh",
+      "start": { "dateTime": "2025-09-29T10:30:00Z" }
+    },
+    {
+      "summary": "국군의날 📅",
+      "id": "20251001_a93n0ak0pj8levv7jfif3smjk8",
+      "start": { "date": "2025-10-01" }
+    },
+    {
+      "summary": "개천절 📅",
+      "id": "20251003_9292etmvk5fcep6gf5q1mgc4qk",
+      "start": { "date": "2025-10-03" }
+    },
+    {
+      "summary": "추석 연휴 📅",
+      "id": "20251005_cfmuabt1v5j1472rea61eaqlm0",
+      "start": { "date": "2025-10-05" }
+    },
+    {
+      "summary": "추석 📅",
+      "id": "20251006_1fk9oridfifu6d93dn4iammj78",
+      "start": { "date": "2025-10-06" }
+    },
+    {
+      "summary": "추석 연휴 📅",
+      "id": "20251007_qd64fgdsha1btfq62inr3083b0",
+      "start": { "date": "2025-10-07" }
+    },
+    {
+      "summary": "쉬는 날 추석 연휴 📅",
+      "id": "20251008_jloh96ugbf8h13kvoevnsufdv8",
+      "start": { "date": "2025-10-08" }
+    },
+    {
+      "summary": "한글날 📅",
+      "id": "20251009_ja2un5elqo36un7sp79dphmgj4",
+      "start": { "date": "2025-10-09" }
+    },
+    {
+      "summary": "[close] P0 (Python, PyTorch) 📅",
+      "id": "69ei7rclsttbahrdkr0oes7h4l",
+      "start": { "date": "2025-09-22" }
+    },
+    {
+      "summary": "[open] P1 (MLP, CNN, RNN) 📅",
+      "id": "7pkp8rbl80i0ef9gr2gdggj3r9",
+      "start": { "date": "2025-09-22" }
+    },
+    {
+      "summary": "정규 수업 ⏰",
+      "id": "68g2achuh7pf7pjnp2om0fov1s_20250922T063000Z",
+      "start": { "dateTime": "2025-09-22T06:30:00Z" }
+    },
+    {
+      "summary": "정규 수업 ⏰",
+      "id": "68g2achuh7pf7pjnp2om0fov1s_20250924T063000Z",
+      "start": { "dateTime": "2025-09-24T06:30:00Z" }
+    },
+    {
+      "summary": "조교 세션 (zoom) ⏰",
+      "id": "0tnoqssidb2b6bheaf86k25kp4",
+      "start": { "dateTime": "2025-09-25T10:00:00Z" }
+    },
+    {
+      "summary": "정규 수업 ⏰",
+      "id": "68g2achuh7pf7pjnp2om0fov1s_20250929T063000Z",
+      "start": { "dateTime": "2025-09-29T06:30:00Z" }
+    },
+    {
+      "summary": "정규 수업 ⏰",
+      "id": "68g2achuh7pf7pjnp2om0fov1s_20251001T063000Z",
+      "start": { "dateTime": "2025-10-01T06:30:00Z" }
+    },
+    {
+      "summary": "[close] P1 (MLP, CNN, RNN) 📅",
+      "id": "7kl6utc9totoab6o80edp1c98k",
+      "start": { "date": "2025-10-06" }
+    },
+    {
+      "summary": "보강 수업 (zoom) ⏰",
+      "id": "68g2achuh7pf7pjnp2om0fov1s_20251006T063000Z",
+      "start": { "dateTime": "2025-10-06T06:30:00Z" }
+    },
+    {
+      "summary": "보강 수업 (zoom) ⏰",
+      "id": "68g2achuh7pf7pjnp2om0fov1s_20251008T063000Z",
+      "start": { "dateTime": "2025-10-08T06:30:00Z" }
+    }
+  ]
+}

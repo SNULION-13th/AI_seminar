@@ -16,7 +16,7 @@ const TodoItem = ({ id, todo, toggleTodo, deleteTodo, isMit, setAsMit }) => {
       ref={setNodeRef}
       style={style}
       className={`flex items-center p-4 border-b border-white/30 group transition-all duration-300 ${
-        todo.completed ? "opacity-50" : ""
+        todo.is_completed ? "opacity-50" : ""
       } ${
         isMit
           ? `border-l-4 border-${accentColor}-500 bg-${accentColor}-500/10`
@@ -33,16 +33,16 @@ const TodoItem = ({ id, todo, toggleTodo, deleteTodo, isMit, setAsMit }) => {
           onClick={() => toggleTodo(todo.id)}
           className={`w-6 h-6 flex items-center justify-center border-2 border-slate-400/80 rounded-full cursor-pointer transition-all duration-300 group-hover:border-${accentColor}-500`}
         >
-          {todo.completed && (
+          {todo.is_completed && (
             <div className={`w-4 h-4 bg-${accentColor}-500 rounded-full`}></div>
           )}
         </div>
         <span
           className={`ml-4 text-lg text-slate-900 ${
-            todo.completed ? "line-through" : ""
+            todo.is_completed ? "line-through" : ""
           } ${isMit ? "font-semibold" : ""}`}
         >
-          {todo.text}
+          {todo.task}
         </span>
       </div>
       <div className="flex items-center space-x-3 opacity-0 group-hover:opacity-100 transition-opacity">

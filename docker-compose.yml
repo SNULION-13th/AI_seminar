@@ -1,0 +1,27 @@
+# Docker Compose for MySQL Server
+version: "3.8"
+
+services:
+  db:
+    # 공식 MySQL 8.0 이미지를 사용합니다.
+    image: mysql:8.0
+    # 컨테이너 이름을 지정합니다.
+    container_name: momentum-mysql-db
+    # Docker가 재시작될 때 컨테이너도 항상 다시 시작되도록 설정합니다.
+    restart: always
+    # .env 파일의 변수를 참조하여 MySQL 서버 설정을 구성합니다.
+    # Docker Compose는 자동으로 프로젝트 루트의 .env 파일을 읽어들입니다.
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      # 루트 유저의 비밀번호는 MYSQL_PASSWORD와 동일하게 설정합니다.
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    # 호스트 PC의 3306 포트와 컨테이너의 3306 포트를 연결합니다.
+    # 이렇게 해야 Node.js 서버(localhost:3306)가 Docker 컨테이너의 DB에 접속할 수 있습니다.
+    ports:
+      - "${DB_PORT:-3306}:3306"
+
+# 데이터 영속성을 위해 사용할 Docker 볼륨을 정의합니다.
+volumes:
+  mysql-data:
