@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import closeIcon from "./assets/close-icon.svg";
 import "./App.css";
+import backgroundImage from "../background.jpg";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -46,7 +47,10 @@ function App() {
   const completedTodos = todos.filter((todo) => todo.completed);
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div
+      className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100"
+      style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}
+    >
       <div className="w-full max-w-md mx-auto">
         <div className="bg-white rounded-lg shadow-lg">
           <header className="bg-indigo-600 text-white text-center py-4 rounded-t-lg">
