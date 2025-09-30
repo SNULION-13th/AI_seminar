@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import PomodoroTimer from './components/features/PomodoroTimer';
 import modeToggleIcon from './assets/mode-toggle.svg';
 import "./App.css"
 
@@ -17,12 +18,17 @@ function App() {
   const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
   const [editingTodo, setEditingTodo] = useState(null);
   const [editingText, setEditingText] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
-  // Load todos from localStorage on initial render
+  // Load todos and mode from localStorage on initial render
   useEffect(() => {
     const savedTodos = localStorage.getItem('todos');
     if (savedTodos) {
       setTodos(JSON.parse(savedTodos));
+    }
+    const savedMode = localStorage.getItem('darkMode');
+    if (savedMode !== null) {
+      setIsDarkMode(JSON.parse(savedMode));
     }
   }, []);
 
@@ -30,6 +36,20 @@ function App() {
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
+
+  // Save dark mode to localStorage and update class
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  };
 
   const handleAddTodo = (e) => {
     e.preventDefault();
@@ -93,15 +113,15 @@ function App() {
   const remainingTodos = todos.filter(todo => !todo.completed).length;
 
   return (
-    <div className="bg-gray-900 flex justify-center items-center min-h-screen">
+    <div className="bg-white dark:bg-gray-900 flex justify-center items-center min-h-screen transition-colors duration-500">
       <div className="w-full max-w-lg mx-auto p-4">
-        <div className="bg-gray-800 rounded-lg shadow-lg p-6">
+        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-500">
           <div className="flex justify-between items-start mb-6">
             <div>
-              <h1 className="text-xl font-bold text-white">ClearList</h1>
-              <p className="text-sm text-gray-400">{dateString}</p>
+              <h1 className="text-xl font-bold text-gray-900 dark:text-white">ClearList</h1>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{dateString}</p>
             </div>
-            <button className="bg-gray-700 rounded-full p-2">
+            <button onClick={toggleDarkMode} className="bg-gray-200 dark:bg-gray-700 rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
               <img src={modeToggleIcon} alt="Mode Toggle" className="w-5 h-5" />
             </button>
           </div>
@@ -112,20 +132,22 @@ function App() {
               placeholder="오늘 무엇을 할까요?"
               value={newTodo}
               onChange={(e) => setNewTodo(e.target.value)}
-              className="flex-grow p-4 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-grow p-4 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-500"
             />
           </form>
+
+          <PomodoroTimer />
 
           <div className="space-y-2">
             {filteredTodos.length > 0 ? (
               filteredTodos.map(todo => (
-                <li key={todo.id} className="flex items-center justify-between bg-gray-700 p-4 rounded-lg list-none">
+                <li key={todo.id} className="flex items-center justify-between bg-white dark:bg-gray-700 p-4 rounded-lg list-none transition-colors duration-500">
                   <div className="flex items-center w-full">
                     <input
                       type="checkbox"
                       checked={todo.completed}
                       onChange={() => handleToggleComplete(todo.id)}
-                      className="h-5 w-5 rounded bg-gray-600 border-gray-500 focus:ring-blue-500 text-blue-500"
+                      className="h-5 w-5 rounded bg-gray-200 dark:bg-gray-600 border-gray-300 dark:border-gray-500 focus:ring-blue-500 text-blue-500"
                     />
                     {editingTodo === todo.id ? (
                       <input
@@ -134,34 +156,34 @@ function App() {
                         onChange={(e) => setEditingText(e.target.value)}
                         onKeyDown={(e) => handleKeyDown(e, todo.id)}
                         onBlur={() => handleUpdateTodo(todo.id)}
-                        className="ml-3 bg-gray-600 text-white rounded px-2 py-1 w-full"
+                        className="ml-3 bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-white rounded px-2 py-1 w-full"
                         autoFocus
                       />
                     ) : (
-                      <span onDoubleClick={() => handleEdit(todo)} className={`ml-3 text-white ${todo.completed ? 'line-through text-gray-500' : ''}`}>
+                      <span onDoubleClick={() => handleEdit(todo)} className={`ml-3 text-gray-900 dark:text-white ${todo.completed ? 'line-through text-gray-400 dark:text-gray-500' : ''}`}>
                         {todo.text}
                       </span>
                     )}
                   </div>
-                  <button onClick={() => handleDeleteTodo(todo.id)} className="text-gray-500 hover:text-white ml-4">X</button>
+                  <button onClick={() => handleDeleteTodo(todo.id)} className="text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-white ml-4">X</button>
                 </li>
               ))
             ) : (
-              <div className="text-center text-gray-500 py-10">
+              <div className="text-center text-gray-400 dark:text-gray-500 py-10">
                 <p>{filter === 'completed' ? '완료된 할 일이 없습니다.' : '할 일을 추가해 보세요!'}</p>
               </div>
             )}
           </div>
 
           {todos.length > 0 && (
-            <div className="mt-6 flex justify-between items-center text-sm text-gray-400">
+            <div className="mt-6 flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
               <span>{remainingTodos} items left</span>
               <div className="flex space-x-2">
-                <button onClick={() => setFilter('all')} className={`hover:text-white ${filter === 'all' ? 'text-blue-500' : ''}`}>All</button>
-                <button onClick={() => setFilter('active')} className={`hover:text-white ${filter === 'active' ? 'text-blue-500' : ''}`}>Active</button>
-                <button onClick={() => setFilter('completed')} className={`hover:text-white ${filter === 'completed' ? 'text-blue-500' : ''}`}>Completed</button>
+                <button onClick={() => setFilter('all')} className={`hover:text-gray-900 dark:hover:text-white ${filter === 'all' ? 'text-blue-600 dark:text-blue-500' : ''}`}>All</button>
+                <button onClick={() => setFilter('active')} className={`hover:text-gray-900 dark:hover:text-white ${filter === 'active' ? 'text-blue-600 dark:text-blue-500' : ''}`}>Active</button>
+                <button onClick={() => setFilter('completed')} className={`hover:text-gray-900 dark:hover:text-white ${filter === 'completed' ? 'text-blue-600 dark:text-blue-500' : ''}`}>Completed</button>
               </div>
-              <button onClick={handleClearCompleted} className="hover:text-white">Clear Completed</button>
+              <button onClick={handleClearCompleted} className="hover:text-gray-900 dark:hover:text-white">Clear Completed</button>
             </div>
           )}
         </div>
