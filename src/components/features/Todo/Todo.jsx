@@ -18,25 +18,29 @@ const Todo = () => {
   const toggleTodo = (id) => {
     const todo = todos.find(todo => todo.id === id);
     if (todo && !todo.completed) {
-      window.default_api.API_post_page({
-        database_id: "2269782887b7808e84a1c1594545c74d",
-        properties: {
-          "이름": {
-            "title": [
-              {
-                "text": {
-                  "content": todo.text
+      try {
+        window.default_api.API_post_page({
+          database_id: "2269782887b7808e84a1c1594545c74d",
+          properties: {
+            "이름": {
+              "title": [
+                {
+                  "text": {
+                    "content": todo.text
+                  }
                 }
+              ]
+            },
+            "날짜": {
+              "date": {
+                "start": new Date().toISOString().split('T')[0]
               }
-            ]
-          },
-          "날짜": {
-            "date": {
-              "start": new Date().toISOString().split('T')[0]
             }
           }
-        }
-      });
+        });
+      } catch (error) {
+        console.error("Notion API 호출에 실패했습니다:", error);
+      }
     }
     setTodos(
       todos.map(todo =>
