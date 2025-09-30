@@ -1,1 +1,14 @@
-@import "tailwindcss";
+.App {
+  text-align: left;
+}
+
+/* Custom styles for better mobile experience */
+@media (max-width: 640px) {
+  .App {
+    font-size: 14px;
+  }
+}
+
+
+
+
