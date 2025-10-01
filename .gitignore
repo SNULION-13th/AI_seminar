@@ -25,3 +25,6 @@ dist-ssr
 
 GEMINI.md
 .gemini
+
+# Environment variables
+.env
