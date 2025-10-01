@@ -1,7 +1,20 @@
-
 import { useState } from 'react';
 import Button from '../../ui/Button';
 import Input from '../../ui/Input';
+
+// MCP Integration (Slack)
+const sendSlackNotification = (todo) => {
+  // This is a placeholder for Slack integration.
+  // In a real application, this would make an API call to Slack.
+  console.log(`Sending Slack notification for new todo: ${todo}`);
+};
+
+// MCP Integration (Gmail)
+const sendGmailSummary = (todo) => {
+  // This is a placeholder for Gmail integration.
+  // In a real application, this would use the Gmail API to send an email.
+  console.log(`Sending Gmail summary for important todo: ${todo}`);
+};
 
 function TodoList() {
   const [todos, setTodos] = useState([]);
@@ -9,14 +22,28 @@ function TodoList() {
 
   const addTodo = () => {
     if (inputValue.trim() !== '') {
-      setTodos([...todos, inputValue]);
+      const newTodo = { text: inputValue, important: false };
+      setTodos([...todos, newTodo]);
       setInputValue('');
+      // --- MCP Integration: Slack ---
+      sendSlackNotification(newTodo.text);
     }
   };
 
   const deleteTodo = (index) => {
     const newTodos = todos.filter((_, i) => i !== index);
     setTodos(newTodos);
+  };
+
+  const toggleImportant = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].important = !newTodos[index].important;
+    setTodos(newTodos);
+
+    if (newTodos[index].important) {
+      // --- MCP Integration: Gmail ---
+      sendGmailSummary(newTodos[index].text);
+    }
   };
 
   return (
@@ -41,15 +68,29 @@ function TodoList() {
             {todos.map((todo, index) => (
               <li
                 key={index}
-                className="flex justify-between items-center bg-gray-50 p-2 rounded-lg mb-2"
+                className={`flex justify-between items-center p-2 rounded-lg mb-2 ${
+                  todo.important ? 'bg-yellow-100' : 'bg-gray-50'
+                }`}
               >
-                <span>{todo}</span>
-                <button
-                  className="text-red-500 hover:text-red-700 font-semibold"
-                  onClick={() => deleteTodo(index)}
-                >
-                  삭제
-                </button>
+                <span>{todo.text}</span>
+                <div className="flex items-center">
+                  <button
+                    className={`text-xs font-semibold mr-2 ${
+                      todo.important
+                        ? 'text-yellow-600 hover:text-yellow-800'
+                        : 'text-gray-400 hover:text-gray-600'
+                    }`}
+                    onClick={() => toggleImportant(index)}
+                  >
+                    {todo.important ? '★ 중요' : '☆ 중요'}
+                  </button>
+                  <button
+                    className="text-red-500 hover:text-red-700 font-semibold text-sm"
+                    onClick={() => deleteTodo(index)}
+                  >
+                    삭제
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
