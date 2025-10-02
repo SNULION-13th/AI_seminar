@@ -409,3 +409,4 @@ const MagicPatternsCommunity = () => {
 };
 
 export default MagicPatternsCommunity;
+
